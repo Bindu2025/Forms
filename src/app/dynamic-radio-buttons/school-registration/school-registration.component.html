@@ -1,0 +1,64 @@
+<h3>Registration Form</h3>
+<p *ngIf="isFormValid && registrationForm.pristine" ngClass="success">
+	Student registered successfully.
+</p>
+<form [formGroup]="registrationForm" (ngSubmit)="onFormSubmit()">
+	<table >
+		<tr>
+			<td>Student Name:</td>
+			<td>
+				<input formControlName="stdName">
+				<div *ngIf="registrationForm.get('stdName')?.invalid && isFormValid != null && !isFormValid"
+					ngClass="error">
+					Name required.
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Gender:</td>
+			<td>
+				<div *ngFor="let x of stdGenData">
+					<input type="radio" [value]="x.value" formControlName="stdGender" (change)="onStdGenderChange()">
+					{{x.title}}
+				</div>
+				<div *ngIf="stdGender?.invalid && isFormValid != null && !isFormValid" ngClass="error">
+					Select gender.
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Source of information about school: </td>
+			<td>
+				<div *ngFor="let source of infoSourceData">
+					<input type="radio" [value]="source.value" formControlName="infoSource"
+						(change)="onInfoSourceChange()">
+					{{source.title}}
+				</div>
+				<div *ngIf="infoSource?.invalid && isFormValid != null && !isFormValid" ngClass="error">
+					Select source.
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>How will you pay fee? </td>
+			<td>
+				<div *ngFor="let paymentMethod of paymentMethodData">
+					<input type="radio" [value]="paymentMethod.value" formControlName="payMethod"
+						(change)="onPaymentMethodChange()">
+					{{paymentMethod.title}}
+					
+				</div>
+				<div *ngIf="payMethod?.invalid && isFormValid != null && !isFormValid" ngClass="error">
+					Select payment method.
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<button>Submit</button>&nbsp;&nbsp;
+				<button type="button" (click)="setDefaultValues()" class="setDefault">Set Default</button> &nbsp;&nbsp;
+				<button type="button" (click)="reset()" id="reset">Reset</button>&nbsp;&nbsp;
+			</td>
+		</tr>
+	</table>
+</form> 
